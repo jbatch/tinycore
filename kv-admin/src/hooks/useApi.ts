@@ -2,14 +2,14 @@ import { useCallback, useState } from "react";
 
 const API_BASE_URL = "http://localhost:3000/api/v1";
 
-interface Application {
+export interface Application {
   id: string;
   name: string;
   created_at?: string;
   metadata?: Record<string, unknown>;
 }
 
-interface KVItem {
+export interface KVItem {
   key: string;
   value: unknown;
   created_at?: string;
