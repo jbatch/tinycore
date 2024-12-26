@@ -1,9 +1,26 @@
 import sqlite3 from "sqlite3";
 import { logger } from "../utils/logger";
+import fs from "fs";
+import child_process from "child_process";
 
 const DB_PATH = process.env.DB_PATH || "./data/tinycore.db";
+// console.log({
+//   DB_PATH,
+//   files: fs.readdirSync("/app/data"),
+//   //   access: fs.accessSync("/app/data", fs.constants.W_OK),
+//   user: require("os").userInfo(),
+//   ls: fs.readdirSync("/app"),
+//   stat: fs.lstatSync("/app/data"),
+//   f2: child_process.spawnSync("ls", ["-la", "/app"]).stdout.toString(),
+// });
 
-export const db = new sqlite3.Database(DB_PATH);
+export const db = new sqlite3.Database(DB_PATH, (err) => {
+  if (err) {
+    logger.error(`Error opening database: ${err.message}`, err);
+  } else {
+    logger.info("Successfully opened database connection");
+  }
+});
 
 export async function initializeDatabase(): Promise<void> {
   const schema = `

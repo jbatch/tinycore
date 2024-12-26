@@ -4,9 +4,10 @@
     "description": "Simple key-value store service for TinyCore infrastructure",
     "main": "dist/index.js",
     "scripts": {
-        "start": "node dist/index.js",
+        "start": "NODE_ENV=production node dist/index.js",
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
         "build": "tsc",
+        "build:client": "cd kv-admin && yarn && yarn build",
         "lint": "eslint . --ext .ts",
         "test": "jest"
     },

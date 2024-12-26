@@ -7,6 +7,7 @@ import { kvRouter } from "./routes/kvRoutes";
 import { appRouter } from "./routes/appRoutes";
 // import { userRouter } from "./routes/userRoutes";
 import { logger } from "./utils/logger";
+import path from "path";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,6 +21,15 @@ app.use(express.json());
 app.use("/api/v1/kv", kvRouter);
 app.use("/api/v1/apps", appRouter);
 // app.use("/api/v1/users", userRouter);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "kv-admin")));
+
+  // Handle client routing by sending all non-API routes to index.html
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "kv-admin/index.html"));
+  });
+}
 
 // Error handling
 app.use(errorHandler);

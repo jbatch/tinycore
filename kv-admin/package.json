@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "VITE_API_BASE_URL=http://localhost:3000/api/v1 vite",
+    "build": "tsc -b && VITE_API_BASE_URL=https://kv.jbat.ch/api/v1 vite build --emptyOutDir --outDir \"../dist/kv-admin\"",
     "lint": "eslint .",
     "preview": "vite preview"
   },
