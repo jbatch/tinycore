@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# TinyCore-KV Admin UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based administration interface for managing TinyCore-KV applications and exploring their key-value stores.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TinyCore-KV Admin UI provides a user-friendly interface for managing applications and their associated key-value stores in TinyCore-KV. It enables administrators to:
 
-## Expanding the ESLint configuration
+- Create, view, and delete applications
+- Browse and search key-value pairs within each application
+- Add and remove key-value entries
+- Manage application and key-value metadata
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- **Application Management**
+  - List all applications with their creation timestamps
+  - Create new applications with custom IDs and metadata
+  - Delete applications and their associated data
+- **Key-Value Store Management**
+  - Browse all key-value pairs for each application
+  - Search keys by prefix
+  - Add new key-value pairs with optional metadata
+  - Delete existing key-value pairs
+  - View formatted JSON values and metadata
+- **User Interface**
+  - Clean, modern interface built with React and shadcn/ui
+  - Tabbed navigation between applications and KV store views
+  - Pagination for large datasets
+  - JSON validation for value and metadata fields
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Getting Started
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Prerequisites
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- Node.js (v20 or later recommended)
+- A running instance of TinyCore-KV server
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone git@github.com:jbatch/tinycore-kv.git
+   cd kv-admin
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   yarn
+   ```
+
+3. [OPTIONAL] Configure environment variables:
+   Create a `.env` file with:
+
+   ```
+   VITE_API_BASE_URL=/api/v1  # Adjust if your API is hosted elsewhere
+   ```
+
+4. Start the development server:
+   ```bash
+   yarn dev
+   ```
+
+## TODO
+
+- [ ] Admin authentication and authorization
+- [ ] Validation of object fields
+- [ ] Enhanced metadata visualization
+- [ ] Batch operations for key-value pairs
