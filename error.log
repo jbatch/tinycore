@@ -1,0 +1,51 @@
+{"code":"SQLITE_ERROR","errno":1,"level":"error","message":"Database initialization failed: SQLITE_ERROR: near \"foreign\": syntax error","stack":"Error: SQLITE_ERROR: near \"foreign\": syntax error","timestamp":"2024-12-24T07:13:42.524Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:14:12.332Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:14:12.332Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:18:39.986Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:18:39.987Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:19:14.051Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:19:14.051Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:19:27.459Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T07:19:27.460Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:04:17.317Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:04:17.317Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:04:42.896Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:04:42.897Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:04:54.652Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:04:54.653Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:05:03.600Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:05:03.601Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:10:12.748Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:10:12.748Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:10:27.547Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:10:27.548Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:10:35.984Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:10:35.984Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:11:00.670Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:11:00.671Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:11:06.221Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:11:06.221Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:11:15.694Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:11:15.694Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:11:22.772Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:11:22.773Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error setting KV: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:13:56.031Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:13:56.031Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:14:23.182Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:14:23.182Z"}
+{"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:14:30.357Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:14:30.358Z"}
+{"err":{"code":"SQLITE_CONSTRAINT","errno":19},"level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:14:47.224Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:14:47.225Z"}
+{"err":"SQLITE_CONSTRAINT","level":"error","message":"Error setting KV:","timestamp":"2024-12-24T11:15:05.592Z"}
+{"code":"SQLITE_CONSTRAINT","errno":19,"level":"error","message":"Error in PUT /:appId/:key: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","stack":"Error: SQLITE_CONSTRAINT: FOREIGN KEY constraint failed","timestamp":"2024-12-24T11:15:05.593Z"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:45:19.855Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:47:08.602Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:47:44.653Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:49:56.140Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:53:07.734Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:55:03.285Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:57:07.764Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:57:27.491Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:57:37.805Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
+{"level":"error","message":"Error in PUT /:appId/:key:","statusCode":400,"timestamp":"2024-12-26T01:58:26.015Z","type":"db_constraint_violation","userMessage":"Invalid owner_id or app_id"}
