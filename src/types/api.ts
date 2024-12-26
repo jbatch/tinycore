@@ -3,21 +3,7 @@ import { type Request } from "express";
 import { KVItem } from "./kv";
 import { type ParamsDictionary } from "express-serve-static-core";
 import { type ParsedQs } from "qs";
-
-// Generic params with app_id and key
-interface KVUrlParams {
-  appId: string;
-  key: string;
-}
-
-// For listing keys (only has appId)
-interface KVListUrlParams {
-  appId: string;
-}
-
-interface KVListQueryParams {
-  prefix?: string;
-}
+import { Application } from "./application";
 
 // Request bodies
 interface SetKVBody {
@@ -35,7 +21,23 @@ interface ErrorResponse {
   error: string;
 }
 
-// Request types for each endpoint
+/**
+ * KV
+ */
+
+interface KVUrlParams {
+  appId: string;
+  key: string;
+}
+
+interface KVListUrlParams {
+  appId: string;
+}
+
+interface KVListQueryParams {
+  prefix?: string;
+}
+
 export interface GetKVRequest extends Request<ParamsDictionary, any, any, any> {
   params: ParamsDictionary & {
     appId: string;
@@ -68,11 +70,46 @@ export interface ListKVRequest
   };
 }
 
+/**
+ * Application
+ */
+export interface GetApplicationRequest extends Request {
+  params: {
+    id: string;
+  };
+}
+
+export interface CreateApplicationRequest extends Request {
+  body: {
+    id: string;
+    name: string;
+    metadata?: Record<string, any>;
+  };
+}
+
+export interface UpdateApplicationRequest extends Request {
+  params: {
+    id: string;
+  };
+  body: {
+    name: string;
+    metadata?: Record<string, any>;
+  };
+}
+
+export interface DeleteApplicationRequest extends Request {
+  params: {
+    id: string;
+  };
+}
+
 // Response types for each endpoint
 export type GetKVResponse = KVItem | ErrorResponse;
-
 export type SetKVResponse = SuccessResponse | ErrorResponse;
-
 export type DeleteKVResponse = SuccessResponse | ErrorResponse;
-
 export type ListKVResponse = KVItem[] | ErrorResponse;
+export type GetApplicationResponse = Application | ErrorResponse;
+export type CreateApplicationResponse = SuccessResponse | ErrorResponse;
+export type UpdateApplicationResponse = SuccessResponse | ErrorResponse;
+export type DeleteApplicationResponse = SuccessResponse | ErrorResponse;
+export type ListApplicationResponse = Application[] | ErrorResponse;

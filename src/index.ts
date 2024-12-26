@@ -4,7 +4,7 @@ import cors from "cors";
 import { initializeDatabase } from "./database/database";
 import { errorHandler } from "./middleware/error";
 import { kvRouter } from "./routes/kvRoutes";
-// import { appRouter } from "./routes/applicationRoutes";
+import { appRouter } from "./routes/appRoutes";
 // import { userRouter } from "./routes/userRoutes";
 import { logger } from "./utils/logger";
 
@@ -18,7 +18,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/v1/kv", kvRouter);
-// app.use("/api/v1/apps", appRouter);
+app.use("/api/v1/apps", appRouter);
 // app.use("/api/v1/users", userRouter);
 
 // Error handling

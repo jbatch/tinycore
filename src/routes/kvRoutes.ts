@@ -12,7 +12,6 @@ import {
   DeleteKVResponse,
   ListKVResponse,
 } from "../types/api";
-import { env } from "process";
 import handleError from "../utils/handleError";
 
 export const kvRouter = Router();
