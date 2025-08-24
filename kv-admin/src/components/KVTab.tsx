@@ -19,7 +19,7 @@ import {
   Table,
 } from "./ui/table";
 import { Textarea } from "./ui/textarea";
-import { KVItem } from "@/hooks/useApi";
+import { KVItem } from "@/types/frontend";
 
 interface KVTabParams {
   kvItems: KVItem[] | null;

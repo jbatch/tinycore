@@ -19,7 +19,7 @@ import {
   TableCell,
   Table,
 } from "./ui/table";
-import { Application } from "@/hooks/useApi";
+import { Application } from "@/types/frontend";
 
 interface ApplicationTabParams {
   applications: Application[] | null;
