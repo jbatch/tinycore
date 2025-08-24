@@ -1,18 +1,8 @@
 import sqlite3 from "sqlite3";
 import { logger } from "../utils/logger";
-import fs from "fs";
-import child_process from "child_process";
+import { migrationManager } from "./migrations";
 
 const DB_PATH = process.env.DB_PATH || "./data/tinycore.db";
-// console.log({
-//   DB_PATH,
-//   files: fs.readdirSync("/app/data"),
-//   //   access: fs.accessSync("/app/data", fs.constants.W_OK),
-//   user: require("os").userInfo(),
-//   ls: fs.readdirSync("/app"),
-//   stat: fs.lstatSync("/app/data"),
-//   f2: child_process.spawnSync("ls", ["-la", "/app"]).stdout.toString(),
-// });
 
 export const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
@@ -23,8 +13,10 @@ export const db = new sqlite3.Database(DB_PATH, (err) => {
 });
 
 export async function initializeDatabase(): Promise<void> {
-  const schema = `
+  // First, create the base schema (tables that migrations depend on)
+  const baseSchema = `
     PRAGMA foreign_keys = ON;
+    
     CREATE TABLE IF NOT EXISTS applications (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -41,6 +33,7 @@ export async function initializeDatabase(): Promise<void> {
       metadata JSON
     );
 
+    -- Create initial kv_store table (will be migrated by migration 001)
     CREATE TABLE IF NOT EXISTS kv_store (
       app_id TEXT,
       key TEXT,
@@ -55,15 +48,29 @@ export async function initializeDatabase(): Promise<void> {
     );
   `;
 
-  return new Promise((resolve, reject) => {
-    db.exec(schema, (err) => {
+  return new Promise(async (resolve, reject) => {
+    // Create base schema first
+    db.exec(baseSchema, async (err) => {
       if (err) {
-        logger.error("Database initialization failed:", err);
+        logger.error("Base database schema creation failed:", err);
         reject(err);
-      } else {
-        logger.info("Database initialized successfully");
+        return;
+      }
+
+      logger.info("Base database schema created successfully");
+
+      try {
+        // Run any pending migrations
+        await migrationManager.runMigrations();
+        logger.info("Database initialization completed successfully");
         resolve();
+      } catch (migrationError) {
+        logger.error("Database migration failed:", migrationError);
+        reject(migrationError);
       }
     });
   });
 }
+
+// Export migration manager for CLI usage
+export { migrationManager };

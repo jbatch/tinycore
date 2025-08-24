@@ -4,12 +4,24 @@ import { KVItem } from "./kv";
 import { type ParamsDictionary } from "express-serve-static-core";
 import { type ParsedQs } from "qs";
 import { Application } from "./application";
+import { User } from "./user";
 
 // Request bodies
 interface SetKVBody {
   value: any;
   metadata?: Record<string, any>;
-  owner_id?: string;
+  // owner_id is now set automatically from req.user
+}
+
+interface RegisterBody {
+  email: string;
+  password: string;
+  metadata?: Record<string, any>;
+}
+
+interface LoginBody {
+  email: string;
+  password: string;
 }
 
 // Response bodies
@@ -19,6 +31,12 @@ interface SuccessResponse {
 
 interface ErrorResponse {
   error: string;
+}
+
+interface AuthResponse {
+  message: string;
+  user: User;
+  token: string;
 }
 
 /**
@@ -43,13 +61,16 @@ export interface GetKVRequest extends Request<ParamsDictionary, any, any, any> {
     appId: string;
     key: string;
   };
+  user?: User; // Added by auth middleware
 }
+
 export interface SetKVRequest
   extends Request<ParamsDictionary, any, SetKVBody, any> {
   params: ParamsDictionary & {
     appId: string;
     key: string;
   };
+  user?: User; // Added by auth middleware
 }
 
 export interface DeleteKVRequest
@@ -58,6 +79,7 @@ export interface DeleteKVRequest
     appId: string;
     key: string;
   };
+  user?: User; // Added by auth middleware
 }
 
 export interface ListKVRequest
@@ -68,6 +90,7 @@ export interface ListKVRequest
   query: ParsedQs & {
     prefix?: string;
   };
+  user?: User; // Added by auth middleware
 }
 
 /**
@@ -77,6 +100,7 @@ export interface GetApplicationRequest extends Request {
   params: {
     id: string;
   };
+  user?: User; // Added by auth middleware
 }
 
 export interface CreateApplicationRequest extends Request {
@@ -85,6 +109,7 @@ export interface CreateApplicationRequest extends Request {
     name: string;
     metadata?: Record<string, any>;
   };
+  user?: User; // Added by auth middleware
 }
 
 export interface UpdateApplicationRequest extends Request {
@@ -95,12 +120,29 @@ export interface UpdateApplicationRequest extends Request {
     name: string;
     metadata?: Record<string, any>;
   };
+  user?: User; // Added by auth middleware
 }
 
 export interface DeleteApplicationRequest extends Request {
   params: {
     id: string;
   };
+  user?: User; // Added by auth middleware
+}
+
+/**
+ * User Authentication
+ */
+export interface RegisterRequest extends Request {
+  body: RegisterBody;
+}
+
+export interface LoginRequest extends Request {
+  body: LoginBody;
+}
+
+export interface AuthenticatedRequest extends Request {
+  user: User; // Required for authenticated routes
 }
 
 // Response types for each endpoint
@@ -113,3 +155,12 @@ export type CreateApplicationResponse = SuccessResponse | ErrorResponse;
 export type UpdateApplicationResponse = SuccessResponse | ErrorResponse;
 export type DeleteApplicationResponse = SuccessResponse | ErrorResponse;
 export type ListApplicationResponse = Application[] | ErrorResponse;
+export type RegisterResponse =
+  | (SuccessResponse & { user: User })
+  | ErrorResponse;
+export type LoginResponse = AuthResponse | ErrorResponse;
+export type UserProfileResponse = User | ErrorResponse;
+export type RegistrationStatusResponse =
+  | { registrationAllowed: boolean; hasUsers: boolean }
+  | ErrorResponse;
+export type ListUsersResponse = User[] | ErrorResponse;

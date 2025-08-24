@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, LogOut, User } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { useApplications, useKVStore } from "@/hooks/useApi";
 import ApplicationTab from "./components/ApplicationTab";
 import KVTab from "./components/KVTab";
 
-const itemsPerPage = 1;
+interface AdminUIProps {
+  user: any;
+  token: string | null;
+  onLogout: () => void;
+}
 
-const AdminUI = () => {
+const itemsPerPage = 10;
+
+const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
   const [selectedApp, setSelectedApp] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [searchPrefix, setSearchPrefix] = useState("");
@@ -24,7 +31,7 @@ const AdminUI = () => {
     fetchApplications,
     createApplication,
     deleteApplication,
-  } = useApplications();
+  } = useApplications(token);
 
   const {
     data: kvItems,
@@ -32,7 +39,7 @@ const AdminUI = () => {
     fetchKVItems,
     createKVItem,
     deleteKVItem,
-  } = useKVStore();
+  } = useKVStore(token);
 
   useEffect(() => {
     fetchApplications();
@@ -99,7 +106,19 @@ const AdminUI = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">TinyCore Admin</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">TinyCore Admin</h1>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <User className="h-4 w-4" />
+            <span className="text-sm text-gray-600">{user?.email}</span>
+          </div>
+          <Button variant="outline" onClick={onLogout}>
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
+        </div>
+      </div>
 
       {(appError || kvError) && (
         <Alert variant="destructive" className="mb-4">

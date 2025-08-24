@@ -9,26 +9,34 @@
         "build": "tsc",
         "build:client": "cd kv-admin && yarn && yarn build",
         "lint": "eslint . --ext .ts",
-        "test": "jest"
+        "test": "jest",
+        "migrate": "ts-node src/scripts/migrate.ts",
+        "migrate:status": "npm run migrate status",
+        "migrate:up": "npm run migrate up",
+        "migrate:list": "npm run migrate list"
     },
     "dependencies": {
-        "express": "^4.18.2",
-        "sqlite3": "^5.1.7",
-        "winston": "^3.11.0",
-        "express-validator": "^7.0.1",
+        "bcrypt": "^6.0.0",
         "cors": "^2.8.5",
-        "helmet": "^7.1.0"
+        "express": "^4.18.2",
+        "express-validator": "^7.0.1",
+        "helmet": "^7.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "sqlite3": "^5.1.7",
+        "winston": "^3.11.0"
     },
     "devDependencies": {
+        "@types/bcrypt": "^6.0.0",
+        "@types/cors": "^2.8.17",
         "@types/express": "^4.17.21",
+        "@types/jest": "^29.5.12",
+        "@types/jsonwebtoken": "^9.0.10",
         "@types/node": "^20.0.0",
         "@types/sqlite3": "^3.1.11",
-        "@types/cors": "^2.8.17",
         "@typescript-eslint/eslint-plugin": "^7.0.0",
         "@typescript-eslint/parser": "^7.0.0",
         "eslint": "^8.56.0",
         "jest": "^29.7.0",
-        "@types/jest": "^29.5.12",
         "ts-jest": "^29.1.2",
         "ts-node-dev": "^2.0.0",
         "typescript": "^5.3.0"

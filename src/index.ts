@@ -5,7 +5,8 @@ import { initializeDatabase } from "./database/database";
 import { errorHandler } from "./middleware/error";
 import { kvRouter } from "./routes/kvRoutes";
 import { appRouter } from "./routes/appRoutes";
-// import { userRouter } from "./routes/userRoutes";
+import { userRouter } from "./routes/userRoutes";
+import { requireAuth } from "./middleware/auth";
 import { logger } from "./utils/logger";
 import path from "path";
 
@@ -18,9 +19,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/v1/kv", kvRouter);
-app.use("/api/v1/apps", appRouter);
-// app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/kv", kvRouter); // Now protected by auth in kvRouter
+app.use("/api/v1/apps", requireAuth, appRouter); // Protect app routes
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "kv-admin")));

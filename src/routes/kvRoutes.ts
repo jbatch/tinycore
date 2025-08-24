@@ -1,6 +1,7 @@
 import { Router, Response, Request } from "express";
 import { body, param, query, validationResult } from "express-validator";
 import { KVService } from "../services/kvService";
+import { requireAuth } from "../middleware/auth";
 import { logger } from "../utils/logger";
 import {
   GetKVRequest,
@@ -15,6 +16,9 @@ import {
 import handleError from "../utils/handleError";
 
 export const kvRouter = Router();
+
+// Apply authentication to all KV routes
+kvRouter.use(requireAuth);
 
 // Validation middleware
 const validateRequest = (req: Request, res: Response, next: Function) => {
@@ -35,7 +39,9 @@ kvRouter.get(
   async (req: GetKVRequest, res: Response<GetKVResponse>) => {
     try {
       const { appId, key } = req.params;
-      const item = await KVService.get(appId, key);
+      const userId = req.user!.id;
+
+      const item = await KVService.get(appId, key, userId);
 
       if (!item) {
         return res.status(404).json({ error: "Key not found" });
@@ -62,14 +68,15 @@ kvRouter.put(
   async (req: SetKVRequest, res: Response<SetKVResponse>) => {
     try {
       const { appId, key } = req.params;
-      const { value, metadata, owner_id } = req.body;
+      const { value, metadata } = req.body;
+      const userId = req.user!.id;
 
       await KVService.set({
         app_id: appId,
         key,
         value,
         metadata,
-        owner_id,
+        owner_id: userId, // Always set to current user
       });
 
       res.status(200).json({ message: "Value set successfully" });
@@ -88,10 +95,14 @@ kvRouter.delete(
   async (req: DeleteKVRequest, res: Response<DeleteKVResponse>) => {
     try {
       const { appId, key } = req.params;
-      const deleted = await KVService.delete(appId, key);
+      const userId = req.user!.id;
+
+      const deleted = await KVService.delete(appId, key, userId);
 
       if (!deleted) {
-        return res.status(404).json({ error: "Key not found" });
+        return res
+          .status(404)
+          .json({ error: "Key not found or not owned by you" });
       }
 
       res.status(200).json({ message: "Value deleted successfully" });
@@ -111,8 +122,9 @@ kvRouter.get(
     try {
       const { appId } = req.params;
       const prefix = req.query.prefix;
+      const userId = req.user!.id;
 
-      const items = await KVService.list(appId, prefix);
+      const items = await KVService.list(appId, prefix, userId);
       res.json(items);
     } catch (error) {
       logger.error("Error in GET /:appId:", error);

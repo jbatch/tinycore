@@ -15,6 +15,7 @@ export interface KVItem {
   created_at?: string;
   updated_at?: string;
   metadata?: Record<string, unknown>;
+  owner_id?: string;
 }
 
 interface ApiResponse<T> {
@@ -56,7 +57,22 @@ interface UseKVStoreReturn extends ApiResponse<KVItem[]> {
   getKVItem: (appId: string, key: string) => Promise<KVItem | null>;
 }
 
-export const useApplications = (): UseApplicationsReturn => {
+// Helper function to create authenticated fetch headers
+const getAuthHeaders = (token: string | null) => {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+};
+
+export const useApplications = (
+  token: string | null
+): UseApplicationsReturn => {
   const [data, setData] = useState<Application[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -72,7 +88,9 @@ export const useApplications = (): UseApplicationsReturn => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_BASE_URL}/apps`);
+      const response = await fetch(`${API_BASE_URL}/apps`, {
+        headers: getAuthHeaders(token),
+      });
       if (!response.ok) throw response;
       const apps = await response.json();
       setData(apps);
@@ -81,7 +99,7 @@ export const useApplications = (): UseApplicationsReturn => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [token]);
 
   const createApplication = async (app: {
     id: string;
@@ -92,7 +110,7 @@ export const useApplications = (): UseApplicationsReturn => {
     try {
       const response = await fetch(`${API_BASE_URL}/apps`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(token),
         body: JSON.stringify(app),
       });
       if (!response.ok) throw response;
@@ -112,7 +130,7 @@ export const useApplications = (): UseApplicationsReturn => {
     try {
       const response = await fetch(`${API_BASE_URL}/apps/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(token),
         body: JSON.stringify(app),
       });
       if (!response.ok) throw response;
@@ -129,6 +147,7 @@ export const useApplications = (): UseApplicationsReturn => {
     try {
       const response = await fetch(`${API_BASE_URL}/apps/${id}`, {
         method: "DELETE",
+        headers: getAuthHeaders(token),
       });
       if (!response.ok) throw response;
       await fetchApplications();
@@ -142,7 +161,9 @@ export const useApplications = (): UseApplicationsReturn => {
   const getApplication = async (id: string): Promise<Application | null> => {
     setError(null);
     try {
-      const response = await fetch(`${API_BASE_URL}/apps/${id}`);
+      const response = await fetch(`${API_BASE_URL}/apps/${id}`, {
+        headers: getAuthHeaders(token),
+      });
       if (!response.ok) throw response;
       return await response.json();
     } catch (err) {
@@ -163,7 +184,7 @@ export const useApplications = (): UseApplicationsReturn => {
   };
 };
 
-export const useKVStore = (): UseKVStoreReturn => {
+export const useKVStore = (token: string | null): UseKVStoreReturn => {
   const [data, setData] = useState<KVItem[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -175,22 +196,27 @@ export const useKVStore = (): UseKVStoreReturn => {
     return error instanceof Error ? error.message : "An unknown error occurred";
   };
 
-  const fetchKVItems = useCallback(async (appId: string, prefix?: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const url = new URL(`${API_BASE_URL}/kv/${appId}`);
-      if (prefix) url.searchParams.set("prefix", prefix);
-      const response = await fetch(url.toString());
-      if (!response.ok) throw response;
-      const items = await response.json();
-      setData(items);
-    } catch (err) {
-      setError(handleApiError(err));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const fetchKVItems = useCallback(
+    async (appId: string, prefix?: string) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const url = new URL(`${API_BASE_URL}/kv/${appId}`);
+        if (prefix) url.searchParams.set("prefix", prefix);
+        const response = await fetch(url.toString(), {
+          headers: getAuthHeaders(token),
+        });
+        if (!response.ok) throw response;
+        const items = await response.json();
+        setData(items);
+      } catch (err) {
+        setError(handleApiError(err));
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [token]
+  );
 
   const createKVItem = async (
     appId: string,
@@ -202,7 +228,7 @@ export const useKVStore = (): UseKVStoreReturn => {
     try {
       const response = await fetch(`${API_BASE_URL}/kv/${appId}/${key}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(token),
         body: JSON.stringify({ value, metadata }),
       });
       if (!response.ok) throw response;
@@ -228,6 +254,7 @@ export const useKVStore = (): UseKVStoreReturn => {
     try {
       const response = await fetch(`${API_BASE_URL}/kv/${appId}/${key}`, {
         method: "DELETE",
+        headers: getAuthHeaders(token),
       });
       if (!response.ok) throw response;
       await fetchKVItems(appId);
@@ -244,7 +271,9 @@ export const useKVStore = (): UseKVStoreReturn => {
   ): Promise<KVItem | null> => {
     setError(null);
     try {
-      const response = await fetch(`${API_BASE_URL}/kv/${appId}/${key}`);
+      const response = await fetch(`${API_BASE_URL}/kv/${appId}/${key}`, {
+        headers: getAuthHeaders(token),
+      });
       if (!response.ok) throw response;
       return await response.json();
     } catch (err) {
