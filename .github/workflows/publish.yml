@@ -8,23 +8,14 @@ jobs:
     name: Publish TinyCore Docker Image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Use Node.js 20
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn install
-      - name: Build static files
-        run: yarn build
-      - name: Build the TinyCore Docker image
+      - name: Build and push Docker image
         run: |
           docker build . --tag ghcr.io/jbatch/tiny-core:latest
           docker push ghcr.io/jbatch/tiny-core:latest
