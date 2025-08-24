@@ -1,22 +1,7 @@
+import { Application, KVItem } from "@/types/frontend";
 import { useCallback, useState } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
-
-export interface Application {
-  id: string;
-  name: string;
-  created_at?: string;
-  metadata?: Record<string, unknown>;
-}
-
-export interface KVItem {
-  key: string;
-  value: unknown;
-  created_at?: string;
-  updated_at?: string;
-  metadata?: Record<string, unknown>;
-  owner_id?: string;
-}
 
 interface ApiResponse<T> {
   data: T | null;

@@ -8,7 +8,7 @@ interface User {
   email: string;
   created_at: string;
   updated_at: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 function App() {
@@ -76,7 +76,7 @@ function App() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !user) {
     return <LoginComponent onLoginSuccess={handleLoginSuccess} />;
   }
 

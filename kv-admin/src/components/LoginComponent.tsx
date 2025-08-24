@@ -12,9 +12,10 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { getErrorMessage } from "@/lib/errorUtils";
+import { User } from "@/types/frontend";
 
 interface LoginComponentProps {
-  onLoginSuccess: (token: string, user: any) => void;
+  onLoginSuccess: (token: string, user: User) => void;
 }
 
 const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {

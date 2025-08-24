@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, LogOut, User } from "lucide-react";
+import { AlertCircle, LogOut, User as LucideUser } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useApplications, useKVStore } from "@/hooks/useApi";
 import ApplicationTab from "./components/ApplicationTab";
 import KVTab from "./components/KVTab";
+import { User } from "@/types/frontend";
 
 interface AdminUIProps {
-  user: any;
+  user: User;
   token: string | null;
   onLogout: () => void;
 }
@@ -110,7 +111,7 @@ const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
         <h1 className="text-3xl font-bold">TinyCore Admin</h1>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <User className="h-4 w-4" />
+            <LucideUser className="h-4 w-4" />
             <span className="text-sm text-gray-600">{user?.email}</span>
           </div>
           <Button variant="outline" onClick={onLogout}>
