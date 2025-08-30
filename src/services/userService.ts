@@ -1,9 +1,10 @@
 import { db } from "../database/database";
 import { ServiceError } from "../types/error";
 import { logger } from "../utils/logger";
-import { User, UserRow, CreateUserData, LoginData } from "../types/user";
+import { UserRow, CreateUserData, LoginData } from "../types/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { User } from '@tinycore/shared';
 
 const JWT_SECRET =
   process.env.JWT_SECRET || "your-secret-key-change-in-production";

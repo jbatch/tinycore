@@ -1,11 +1,11 @@
 {
-  "name": "kv-admin",
+  "name": "@tinycore/admin-ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "VITE_API_BASE_URL=http://localhost:3000/api/v1 vite",
-    "build": "tsc -b && VITE_API_BASE_URL=https://kv.jbat.ch/api/v1 vite build --emptyOutDir --outDir \"../dist/kv-admin\"",
+    "dev": "VITE_API_BASE_URL=http://localhost:3000 vite",
+    "build": "tsc -b && VITE_API_BASE_URL=https://kv.jbat.ch vite build --emptyOutDir --outDir \"../dist/kv-admin\"",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -14,6 +14,7 @@
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.2",
+    "@tinycore/client": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",

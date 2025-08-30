@@ -1,0 +1,38 @@
+{
+    "name": "@tinycore/client",
+    "version": "0.1.0",
+    "description": "TinyCore KV client library with React hooks",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "clean": "rm -rf dist",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@tinycore/shared": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": "^18.0.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.0",
+        "typescript": "^5.3.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/tinycore-kv.git",
+        "directory": "packages/client"
+    },
+    "keywords": [
+        "kv-store",
+        "react",
+        "hooks",
+        "client",
+        "tinycore"
+    ]
+}

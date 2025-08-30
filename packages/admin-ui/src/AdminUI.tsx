@@ -1,22 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertCircle, LogOut, User as LucideUser } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { useApplications, useKVStore } from "@/hooks/useApi";
+import { useApplications, useKVList, useAuth } from "@tinycore/client";
 import ApplicationTab from "./components/ApplicationTab";
 import KVTab from "./components/KVTab";
-import { User } from "@/types/frontend";
-
-interface AdminUIProps {
-  user: User;
-  token: string | null;
-  onLogout: () => void;
-}
 
 const itemsPerPage = 10;
 
-const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
+const AdminUI: React.FC = () => {
+  const { user, logout } = useAuth();
   const [selectedApp, setSelectedApp] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [searchPrefix, setSearchPrefix] = useState("");
@@ -27,43 +21,30 @@ const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
   const [tab, setTab] = useState("applications");
 
   const {
-    data: applications,
+    applications,
+    loading: _appLoading,
     error: appError,
-    fetchApplications,
-    createApplication,
-    deleteApplication,
-  } = useApplications(token);
+    create: createApplication,
+    delete: deleteApplication,
+  } = useApplications();
 
   const {
     data: kvItems,
+    loading: _kvLoading,
     error: kvError,
-    fetchKVItems,
-    createKVItem,
-    deleteKVItem,
-  } = useKVStore(token);
-
-  useEffect(() => {
-    fetchApplications();
-  }, [fetchApplications]);
-
-  useEffect(() => {
-    if (selectedApp) {
-      fetchKVItems(selectedApp, searchPrefix);
-    }
-  }, [selectedApp, searchPrefix, fetchKVItems]);
+    create: createKVItem,
+    deleteKey: deleteKVItem,
+  } = useKVList(selectedApp || "", searchPrefix);
 
   const handleCreateApplication = async () => {
     try {
-      const success = await createApplication({
+      await createApplication({
         id: newApp.id,
         name: newApp.name,
         metadata: newApp.metadata ? JSON.parse(newApp.metadata) : {},
       });
-
-      if (success) {
-        setIsNewAppDialogOpen(false);
-        setNewApp({ id: "", name: "", metadata: "" });
-      }
+      setIsNewAppDialogOpen(false);
+      setNewApp({ id: "", name: "", metadata: "" });
     } catch (err) {
       console.error("Failed to create application:", err);
     }
@@ -72,17 +53,13 @@ const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
   const handleCreateKVItem = async () => {
     if (!selectedApp) return;
     try {
-      const success = await createKVItem(
-        selectedApp,
+      await createKVItem(
         newKV.key,
         JSON.parse(newKV.value),
         newKV.metadata ? JSON.parse(newKV.metadata) : undefined
       );
-
-      if (success) {
-        setIsNewKVDialogOpen(false);
-        setNewKV({ key: "", value: "", metadata: "" });
-      }
+      setIsNewKVDialogOpen(false);
+      setNewKV({ key: "", value: "", metadata: "" });
     } catch (err) {
       console.error("Failed to create KV item:", err);
     }
@@ -90,9 +67,13 @@ const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
 
   const handleDeleteApplication = async (id: string) => {
     if (!confirm("Are you sure you want to delete this application?")) return;
-    const success = await deleteApplication(id);
-    if (success && selectedApp === id) {
-      setSelectedApp(null);
+    try {
+      await deleteApplication(id);
+      if (selectedApp === id) {
+        setSelectedApp(null);
+      }
+    } catch (err) {
+      console.error("Failed to delete application:", err);
     }
   };
 
@@ -102,7 +83,11 @@ const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
       !confirm("Are you sure you want to delete this KV item?")
     )
       return;
-    await deleteKVItem(selectedApp, key);
+    try {
+      await deleteKVItem(key);
+    } catch (err) {
+      console.error("Failed to delete KV item:", err);
+    }
   };
 
   return (
@@ -114,7 +99,7 @@ const AdminUI: React.FC<AdminUIProps> = ({ user, token, onLogout }) => {
             <LucideUser className="h-4 w-4" />
             <span className="text-sm text-gray-600">{user?.email}</span>
           </div>
-          <Button variant="outline" onClick={onLogout}>
+          <Button variant="outline" onClick={logout}>
             <LogOut className="h-4 w-4 mr-2" />
             Logout
           </Button>

@@ -1,21 +1,28 @@
 {
-    "name": "tinycore-kv",
+    "name": "tinycore",
     "version": "0.1.0",
     "description": "Simple key-value store service for TinyCore infrastructure",
     "main": "dist/index.js",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
     "scripts": {
         "start": "NODE_ENV=production node dist/index.js",
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-        "build": "tsc",
+        "dev:shared": "yarn workspace @tinycore/shared run dev",
+        "dev:admin-ui": "yarn workspace @tinycore/admin-ui run dev",
+        "dev:all": "yarn workspaces foreach -A -p run dev",
+        "build": "yarn workspaces foreach -A -t run build && tsc",
         "build:client": "cd kv-admin && yarn && yarn build",
+        "clean": "yarn workspaces foreach -A run clean && rm -rf dist",
         "lint": "eslint . --ext .ts",
         "test": "jest",
-        "migrate": "ts-node src/scripts/migrate.ts",
-        "migrate:status": "npm run migrate status",
-        "migrate:up": "npm run migrate up",
-        "migrate:list": "npm run migrate list"
+        "test:all": "yarn workspaces foreach -A run test",
+        "migrate": "ts-node src/scripts/migrate.ts"
     },
     "dependencies": {
+        "@tinycore/shared": "workspace:*",
         "bcrypt": "^6.0.0",
         "cors": "^2.8.5",
         "express": "^4.18.2",
@@ -40,5 +47,6 @@
         "ts-jest": "^29.1.2",
         "ts-node-dev": "^2.0.0",
         "typescript": "^5.3.0"
-    }
+    },
+    "packageManager": "yarn@4.9.3"
 }

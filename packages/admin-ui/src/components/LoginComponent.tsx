@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,78 +11,39 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { useAuth, useRegistrationStatus } from "@tinycore/client";
 import { getErrorMessage } from "@/lib/errorUtils";
-import { User } from "@/types/frontend";
 
-interface LoginComponentProps {
-  onLoginSuccess: (token: string, user: User) => void;
-}
+const LoginComponent: React.FC<{ onLogin: () => void }> = ({onLogin}) => {
+  const { login, register, loading: authLoading, error: authError } = useAuth();
+  const {
+    registrationAllowed,
+    loading: statusLoading,
+    error: statusError,
+  } = useRegistrationStatus();
 
-const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [registrationAllowed, setRegistrationAllowed] = useState(false);
-  const [checkingRegistration, setCheckingRegistration] = useState(true);
-
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
-
-  useEffect(() => {
-    checkRegistrationStatus();
-  }, []);
-
-  const checkRegistrationStatus = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/users/registration-status`);
-      const data = await response.json();
-      setRegistrationAllowed(data.registrationAllowed);
-      setIsLogin(!data.registrationAllowed); // If registration not allowed, default to login
-    } catch (err) {
-      console.error("Failed to check registration status:", err);
-      setRegistrationAllowed(false);
-    } finally {
-      setCheckingRegistration(false);
-    }
-  };
+  const [localError, setLocalError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    setLocalError("");
 
     try {
-      const endpoint = isLogin ? "login" : "register";
-      const response = await fetch(`${API_BASE_URL}/users/${endpoint}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || `${endpoint} failed`);
-      }
-
-      if (data.token) {
-        onLoginSuccess(data.token, data.user);
+      if (isLogin) {
+        await login(email, password);
+        onLogin();
       } else {
-        // Registration successful but no token (shouldn't happen with our current setup)
-        setError("Registration successful! Please log in.");
-        setIsLogin(true);
+        await register(email, password);
       }
     } catch (err: unknown) {
-      setError(getErrorMessage(err));
-    } finally {
-      setLoading(false);
+      setLocalError(getErrorMessage(err));
     }
   };
 
-  if (checkingRegistration) {
+  if (statusLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="w-96">
@@ -93,6 +54,8 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
       </div>
     );
   }
+
+  const error = authError || statusError || localError;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -122,7 +85,7 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={loading}
+                disabled={authLoading}
               />
             </div>
 
@@ -135,12 +98,16 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                disabled={loading}
+                disabled={authLoading}
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Loading..." : isLogin ? "Sign In" : "Create Account"}
+            <Button type="submit" className="w-full" disabled={authLoading}>
+              {authLoading
+                ? "Loading..."
+                : isLogin
+                ? "Sign In"
+                : "Create Account"}
             </Button>
           </form>
 
@@ -150,7 +117,7 @@ const LoginComponent: React.FC<LoginComponentProps> = ({ onLoginSuccess }) => {
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-sm text-blue-600 hover:text-blue-800"
-                disabled={loading}
+                disabled={authLoading}
               >
                 {isLogin
                   ? "Need to create the first admin account?"
