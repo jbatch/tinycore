@@ -1,8 +1,10 @@
+import { KVItem } from "@tinycore/shared";
 import { db } from "../database/database";
 import { ServiceError } from "../types/error";
-import { KVItem, KVItemRow } from "../types/kv";
 import { logger } from "../utils/logger";
 
+type KVItemRow = KVItem & { value: string; metadata: string | null };
+type KVItemUpdate = Omit<KVItem, "created_at" | "updated_at">;
 export class KVService {
   static async get(
     appId: string,
@@ -35,7 +37,7 @@ export class KVService {
     });
   }
 
-  static async set(item: KVItem): Promise<void> {
+  static async set(item: KVItemUpdate): Promise<void> {
     const { app_id, key, value, owner_id, metadata } = item;
 
     if (!owner_id) {

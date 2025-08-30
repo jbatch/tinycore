@@ -9,7 +9,6 @@ WORKDIR /app
 # Copy package files for workspace setup
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig*.json ./
 COPY packages ./packages
-COPY src ./src
 
 # Install all dependencies (including dev dependencies for build)
 RUN pnpm install --frozen-lockfile
@@ -32,16 +31,19 @@ ENV NODE_ENV=production \
     LOG_LEVEL="info" \
     DB_PATH="/app/data/tinycore.db"
 
-# Copy package files
+# Copy workspace configuration files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/server/package.json ./packages/server/
+COPY packages/shared/package.json ./packages/shared/
 
-# Copy built application files 
-COPY --from=builder /app/dist ./dist
+# Copy built application files from builder
+COPY --from=builder /app/packages/server/dist ./packages/server/dist
+COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 
 # Copy admin UI from where it actually builds to
-COPY --from=builder /app/packages/dist/kv-admin ./dist/kv-admin
+COPY --from=builder /app/packages/admin-ui/dist/kv-admin ./packages/server/dist/kv-admin
 
-# Install only production dependencies
+# Install only production dependencies for the workspace
 RUN pnpm install --prod --frozen-lockfile
 
 # Create data directory and set up non-root user
@@ -63,5 +65,5 @@ EXPOSE ${PORT}
 HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
     CMD wget -q --spider http://localhost:${PORT}/api/v1/users/registration-status || exit 1
 
-# Start the server
-CMD ["node", "dist/index.js"]
+# Start the server from the correct location
+CMD ["node", "packages/server/dist/index.js"]

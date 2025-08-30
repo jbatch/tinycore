@@ -1,7 +1,10 @@
+import { Application } from "@tinycore/shared";
 import { db } from "../database/database";
 import { ServiceError } from "../types/error";
 import { logger } from "../utils/logger";
-import { Application, ApplicationRow } from "../types/application";
+
+type ApplicationRow = Application & { metadata: string | null };
+type ApplicationUpdate = Omit<Application, 'created_at' | 'updated_at'>
 
 export class ApplicationService {
   static async get(id: string): Promise<Application | null> {
@@ -30,7 +33,7 @@ export class ApplicationService {
     });
   }
 
-  static async create(app: Application): Promise<void> {
+  static async create(app: ApplicationUpdate): Promise<void> {
     const { id, name, metadata } = app;
     return new Promise((resolve, reject) => {
       db.run(
@@ -56,7 +59,7 @@ export class ApplicationService {
     });
   }
 
-  static async update(app: Application): Promise<boolean> {
+  static async update(app: ApplicationUpdate): Promise<boolean> {
     const { id, name, metadata } = app;
     return new Promise((resolve, reject) => {
       db.run(

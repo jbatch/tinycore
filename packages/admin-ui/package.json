@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "VITE_API_BASE_URL=http://localhost:3000 vite",
-    "build": "tsc -b && VITE_API_BASE_URL=https://kv.jbat.ch vite build --emptyOutDir --outDir \"../dist/kv-admin\"",
+    "build": "tsc -b && VITE_API_BASE_URL=https://kv.jbat.ch vite build --emptyOutDir --outDir \"./dist/kv-admin\"",
+    "clean": "rm -rf dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },

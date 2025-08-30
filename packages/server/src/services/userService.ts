@@ -1,14 +1,16 @@
 import { db } from "../database/database";
 import { ServiceError } from "../types/error";
 import { logger } from "../utils/logger";
-import { UserRow, CreateUserData, LoginData } from "../types/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from '@tinycore/shared';
+import { User } from "@tinycore/shared";
+import { LoginRequest, RegisterRequest } from "../types/api";
 
 const JWT_SECRET =
   process.env.JWT_SECRET || "your-secret-key-change-in-production";
 const SALT_ROUNDS = 10;
+
+type UserRow = User & { metadata: string | null };
 
 export class UserService {
   static async get(id: string): Promise<User | null> {
@@ -63,7 +65,7 @@ export class UserService {
     });
   }
 
-  static async create(userData: CreateUserData): Promise<User> {
+  static async create(userData: RegisterRequest['body']): Promise<User> {
     const { email, password, metadata } = userData;
 
     // Hash the password
@@ -100,7 +102,7 @@ export class UserService {
   }
 
   static async login(
-    loginData: LoginData
+    loginData: LoginRequest['body']
   ): Promise<{ user: User; token: string }> {
     const { email, password } = loginData;
 

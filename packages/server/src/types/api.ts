@@ -1,10 +1,8 @@
 // src/types/api.ts
 import { type Request } from "express";
-import { KVItem } from "./kv";
 import { type ParamsDictionary } from "express-serve-static-core";
 import { type ParsedQs } from "qs";
-import { Application } from "./application";
-import { User } from "./user";
+import { Application, KVItem, User } from "@tinycore/shared";
 
 // Request bodies
 interface SetKVBody {

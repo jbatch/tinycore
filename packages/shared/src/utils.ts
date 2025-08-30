@@ -34,5 +34,3 @@ export const validators = {
   isNonEmptyString: (str: any): str is string =>
     typeof str === "string" && str.trim().length > 0,
 };
-
-console.log("🔧 TinyCore shared utilities loaded");
