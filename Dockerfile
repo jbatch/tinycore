@@ -34,11 +34,9 @@ ENV NODE_ENV=production \
 # Copy workspace configuration files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/server/package.json ./packages/server/
-COPY packages/shared/package.json ./packages/shared/
 
 # Copy built application files from builder
 COPY --from=builder /app/packages/server/dist ./packages/server/dist
-COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
 
 # Copy admin UI from where it actually builds to
 COPY --from=builder /app/packages/admin-ui/dist/kv-admin ./packages/server/dist/kv-admin
