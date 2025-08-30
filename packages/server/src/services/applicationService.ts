@@ -1,6 +1,6 @@
-import { Application } from "@tinycore/shared";
 import { db } from "../database/database";
 import { ServiceError } from "../types/error";
+import { Application } from "../types/shared-types";
 import { logger } from "../utils/logger";
 
 type ApplicationRow = Application & { metadata: string | null };

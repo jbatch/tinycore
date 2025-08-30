@@ -1,6 +1,6 @@
-import { KVItem } from "@tinycore/shared";
 import { db } from "../database/database";
 import { ServiceError } from "../types/error";
+import { KVItem } from "../types/shared-types";
 import { logger } from "../utils/logger";
 
 type KVItemRow = KVItem & { value: string; metadata: string | null };

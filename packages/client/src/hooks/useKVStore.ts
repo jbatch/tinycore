@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { KVItem, KVApi } from "../api/kv";
+import { KVApi } from "../api/kv";
 import { useTinyCoreContext } from "./useTinyCore";
+import { type KVItem } from "../common/types";
 
 interface UseKVStoreOptions {
   autoFetch?: boolean;

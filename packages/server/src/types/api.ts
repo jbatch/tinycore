@@ -2,7 +2,7 @@
 import { type Request } from "express";
 import { type ParamsDictionary } from "express-serve-static-core";
 import { type ParsedQs } from "qs";
-import { Application, KVItem, User } from "@tinycore/shared";
+import { Application, KVItem, type User } from "./shared-types";
 
 // Request bodies
 interface SetKVBody {

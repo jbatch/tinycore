@@ -3,12 +3,6 @@ export interface TinyCoreConfig {
   apiVersion?: string;
 }
 
-export interface ApiResponse<T = any> {
-  data?: T;
-  error?: string;
-  message?: string;
-}
-
 export class TinyCoreApiClient {
   private config: Required<TinyCoreConfig>;
   private token: string | null = null;

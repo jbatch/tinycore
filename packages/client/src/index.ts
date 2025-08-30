@@ -1,17 +1,14 @@
 // Core API
-export {
-  TinyCoreApiClient,
-  type TinyCoreConfig,
-  type ApiResponse,
-} from "./api/core";
-export { KVApi, type KVItem } from "./api/kv";
+export { TinyCoreApiClient, type TinyCoreConfig } from "./api/core";
+
+export { KVApi } from "./api/kv";
 export {
   AuthApi,
-  type User,
   type LoginResponse,
   type RegistrationStatusResponse,
 } from "./api/auth";
 export { ApplicationsApi, type Application } from "./api/applications";
+export { type User, type KVItem } from "./common/types";
 
 // React Hooks
 export {

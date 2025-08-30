@@ -3,8 +3,8 @@ import { ServiceError } from "../types/error";
 import { logger } from "../utils/logger";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "@tinycore/shared";
 import { LoginRequest, RegisterRequest } from "../types/api";
+import { User } from "../types/shared-types";
 
 const JWT_SECRET =
   process.env.JWT_SECRET || "your-secret-key-change-in-production";

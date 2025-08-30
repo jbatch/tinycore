@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { User, AuthApi, RegistrationStatusResponse } from "../api/auth";
+import { AuthApi, RegistrationStatusResponse } from "../api/auth";
 import { useTinyCoreContext } from "./useTinyCore";
+import { type User } from "../common/types";
 
 interface UseAuthResult {
   user: User | null;

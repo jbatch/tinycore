@@ -1,14 +1,5 @@
+import { KVItem } from "../common/types";
 import { TinyCoreApiClient } from "./core";
-
-export interface KVItem {
-  app_id: string;
-  key: string;
-  value: any;
-  owner_id?: string;
-  created_at?: string;
-  updated_at?: string;
-  metadata?: Record<string, any>;
-}
 
 export class KVApi {
   constructor(private client: TinyCoreApiClient) {}

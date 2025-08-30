@@ -1,12 +1,5 @@
+import { User } from "../common/types";
 import { TinyCoreApiClient } from "./core";
-
-export interface User {
-  id: string;
-  email: string;
-  created_at: string;
-  updated_at: string;
-  metadata?: Record<string, any>;
-}
 
 export interface LoginResponse {
   message: string;
