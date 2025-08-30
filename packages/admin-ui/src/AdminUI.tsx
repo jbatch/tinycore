@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertCircle, LogOut, User as LucideUser } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { useApplications, useKVList, useAuth } from "@tinycore/client";
+import { useApplications, useKVList, useAuth } from "@jbatch/tinycore-client";
 import ApplicationTab from "./components/ApplicationTab";
 import KVTab from "./components/KVTab";
 

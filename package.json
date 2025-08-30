@@ -14,7 +14,7 @@
         "build": "pnpm -r run build",
         "build:server": "pnpm --filter @tinycore/server run build",
         "build:admin-ui": "pnpm --filter @tinycore/admin-ui run build",
-        "build:client": "pnpm --filter @tinycore/client run build",
+        "build:client": "pnpm --filter @jbatch/tinycore-client run build",
         "clean": "pnpm -r run clean",
         "lint": "pnpm -r run lint",
         "test": "pnpm -r run test",

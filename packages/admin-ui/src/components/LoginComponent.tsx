@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { useAuth, useRegistrationStatus } from "@tinycore/client";
+import { useAuth, useRegistrationStatus } from "@jbatch/tinycore-client";
 import { getErrorMessage } from "@/lib/errorUtils";
 
 const LoginComponent: React.FC<{ onLogin: () => void }> = ({onLogin}) => {

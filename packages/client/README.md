@@ -1,15 +1,15 @@
-# @tinycore/client
+# @jbatch/tinycore-client
 
 TypeScript client library with React hooks for seamless TinyCore integration. Get authentication, data storage, and application management in your React apps with just a few lines of code.
 
 ## Installation
 
 ```bash
-npm install @tinycore/client
+npm install @jbatch/tinycore-client
 # or
-yarn add @tinycore/client
+yarn add @jbatch/tinycore-client
 # or  
-pnpm add @tinycore/client
+pnpm add @jbatch/tinycore-client
 ```
 
 Note: Tinycore client is not yet published tp npm
@@ -21,7 +21,7 @@ Note: Tinycore client is not yet published tp npm
 Wrap your app with the TinyCore provider:
 
 ```tsx
-import { TinyCoreProvider } from '@tinycore/client';
+import { TinyCoreProvider } from '@jbatch/tinycore-client';
 
 function App() {
   return (
@@ -35,7 +35,7 @@ function App() {
 ### 2. Use authentication
 
 ```tsx
-import { useAuth } from '@tinycore/client';
+import { useAuth } from '@jbatch/tinycore-client';
 
 function AuthComponent() {
   const { login, register, logout, user, isAuthenticated, loading } = useAuth();
@@ -67,7 +67,7 @@ function AuthComponent() {
 ### 3. Store and retrieve data
 
 ```tsx
-import { useKVStore, useKVList } from '@tinycore/client';
+import { useKVStore, useKVList } from '@jbatch/tinycore-client';
 
 function DataComponent() {
   // Single key-value operations
@@ -103,7 +103,7 @@ function DataComponent() {
 ### 4. Manage applications
 
 ```tsx
-import { useApplications } from '@tinycore/client';
+import { useApplications } from '@jbatch/tinycore-client';
 
 function AppsComponent() {
   const { applications, create, delete: deleteApp } = useApplications();
@@ -150,7 +150,7 @@ function AppsComponent() {
 If you prefer direct API calls without React hooks:
 
 ```tsx
-import { TinyCoreApiClient, AuthApi, KVApi, ApplicationsApi } from '@tinycore/client';
+import { TinyCoreApiClient, AuthApi, KVApi, ApplicationsApi } from '@jbatch/tinycore-client';
 
 const client = new TinyCoreApiClient({ baseUrl: 'http://localhost:3000' });
 const auth = new AuthApi(client);
@@ -187,7 +187,7 @@ import type {
   KVItem, 
   LoginResponse,
   TinyCoreConfig 
-} from '@tinycore/client';
+} from '@jbatch/tinycore-client';
 ```
 
 ## Error Handling

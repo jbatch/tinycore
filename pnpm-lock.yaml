@@ -26,6 +26,9 @@ importers:
 
   packages/admin-ui:
     dependencies:
+      '@jbatch/tinycore-client':
+        specifier: workspace:*
+        version: link:../client
       '@radix-ui/react-dialog':
         specifier: ^1.1.4
         version: 1.1.15(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -38,9 +41,6 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.2
         version: 1.1.13(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@tinycore/client':
-        specifier: workspace:*
-        version: link:../client
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -111,9 +111,6 @@ importers:
 
   packages/client:
     dependencies:
-      '@tinycore/shared':
-        specifier: workspace:*
-        version: link:../shared
       react:
         specifier: ^18.0.0
         version: 18.3.1
@@ -127,9 +124,6 @@ importers:
 
   packages/server:
     dependencies:
-      '@tinycore/shared':
-        specifier: workspace:*
-        version: link:../shared
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -188,12 +182,6 @@ importers:
       ts-node-dev:
         specifier: ^2.0.0
         version: 2.0.0(@types/node@20.19.11)(typescript@5.6.3)
-      typescript:
-        specifier: ^5.3.0
-        version: 5.6.3
-
-  packages/shared:
-    devDependencies:
       typescript:
         specifier: ^5.3.0
         version: 5.6.3

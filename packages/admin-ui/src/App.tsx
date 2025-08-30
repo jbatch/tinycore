@@ -1,5 +1,5 @@
 import "./App.css";
-import { TinyCoreProvider, useAuth } from "@tinycore/client";
+import { TinyCoreProvider, useAuth } from "@jbatch/tinycore-client";
 import AdminUI from "./AdminUI";
 import LoginComponent from "./components/LoginComponent";
 

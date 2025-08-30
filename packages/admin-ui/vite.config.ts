@@ -10,6 +10,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["@tinycore/client"],
+    include: ["@jbatch/tinycore-client"],
   },
 });

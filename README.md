@@ -22,7 +22,7 @@ TinyCore is built as a monorepo with these packages:
 | Package | Description | Purpose |
 |---------|-------------|---------|
 | **[@tinycore/server](./packages/server)** | Express.js backend with SQLite | REST APIs, authentication, data storage |
-| **[@tinycore/client](./packages/client)** | TypeScript client with React hooks | Frontend integration, API calls, state management |
+| **[@jbatch/tinycore-client](./packages/client)** | TypeScript client with React hooks | Frontend integration, API calls, state management |
 | **[@tinycore/admin-ui](./packages/admin-ui)** | React admin interface | Data management, user-friendly CRUD operations |
 | **[@tinycore/shared](./packages/shared)** | Common types and utilities | Shared code across packages |
 
