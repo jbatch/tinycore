@@ -10,22 +10,23 @@
     "scripts": {
         "start": "NODE_ENV=production node dist/index.js",
         "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-        "dev:shared": "yarn workspace @tinycore/shared run dev",
-        "dev:admin-ui": "yarn workspace @tinycore/admin-ui run dev",
-        "dev:all": "yarn workspaces foreach -A -p run dev",
-        "build": "yarn workspaces foreach -A -t run build && tsc",
-        "build:client": "cd kv-admin && yarn && yarn build",
-        "clean": "yarn workspaces foreach -A run clean && rm -rf dist",
+        "dev:admin-ui": "pnpm --filter @tinycore/admin-ui run dev",
+        "dev:all": "pnpm -r --parallel run dev",
+        "build": "pnpm -r run build && tsc",
+        "build:client": "pnpm --filter @tinycore/client run build",
+        "clean": "pnpm -r --parallel run dev",
         "lint": "eslint . --ext .ts",
         "test": "jest",
-        "test:all": "yarn workspaces foreach -A run test",
-        "migrate": "ts-node src/scripts/migrate.ts"
+        "test:all": "pnpm -r --parallel run test",
+        "migrate": "ts-node src/scripts/migrate.ts",
+        "docker:build": "docker build -t tinycore-kv .",
+        "docker:run": "docker run -p 3000:3000 --mount type=volume,src=kv-data,dst=/app/data tinycore-kv"
     },
     "dependencies": {
         "@tinycore/shared": "workspace:*",
         "bcrypt": "^6.0.0",
         "cors": "^2.8.5",
-        "express": "^4.18.2",
+        "express": "^4.17.21",
         "express-validator": "^7.0.1",
         "helmet": "^7.1.0",
         "jsonwebtoken": "^9.0.2",
@@ -33,6 +34,8 @@
         "winston": "^3.11.0"
     },
     "devDependencies": {
+        "@types/express-serve-static-core": "^5.0.7",
+        "@types/qs": "^6.14.0",
         "@types/bcrypt": "^6.0.0",
         "@types/cors": "^2.8.17",
         "@types/express": "^4.17.21",
@@ -48,5 +51,5 @@
         "ts-node-dev": "^2.0.0",
         "typescript": "^5.3.0"
     },
-    "packageManager": "yarn@4.9.3"
+    "packageManager": "pnpm@10.15.0"
 }
