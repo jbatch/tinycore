@@ -14,7 +14,7 @@ A simple todo application built with React and TinyCore-KV to demonstrate how to
 ## Prerequisites
 
 - Node.js (v18+ recommended)
-- A running TinyCore-KV server (see [TinyCore-KV repository](https://github.com/jbatch/tinycore-kv))
+- A running TinyCore-KV server (see [TinyCore repository](https://github.com/jbatch/tinycore))
 
 ## Quick Start
 

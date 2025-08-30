@@ -23,11 +23,16 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/kv", kvRouter); // Now protected by auth in kvRouter
 app.use("/api/v1/apps", requireAuth, appRouter); // Protect app routes
 
+app.use("/api/*_ignored", (req, res) => {
+  logger.info("Unmatched API")
+  res.status(404).json({ error: "API endpoint not found" });
+});
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "kv-admin")));
 
   // Handle client routing by sending all non-API routes to index.html
-  app.get("*", (req, res) => {
+  app.get("*_ignored", (req, res) => {
     res.sendFile(path.join(__dirname, "kv-admin/index.html"));
   });
 }

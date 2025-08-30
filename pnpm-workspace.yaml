@@ -2,6 +2,8 @@ packages:
   - packages/*
 
 onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
   - bcrypt
   - esbuild
   - sqlite3
+  - unrs-resolver
