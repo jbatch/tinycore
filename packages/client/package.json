@@ -1,7 +1,7 @@
 {
-    "name": "@tinycore/client",
+    "name": "@jbatch/tinycore-client",
     "version": "0.1.0",
-    "description": "TinyCore KV client library with React hooks",
+    "description": "TinyCore client library with React hooks",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
@@ -14,7 +14,7 @@
         "test": "jest"
     },
     "dependencies": {
-        "@tinycore/shared": "workspace:*"
+        "@jbatch/tinycore-shared": "workspace:*"
     },
     "peerDependencies": {
         "react": "^18.0.0"

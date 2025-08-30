@@ -1,103 +1,94 @@
-# TinyCore-KV
+# TinyCore
 
-A lightweight key-value store service designed for hobby projects. TinyCore-KV provides a simple, self-contained storage solution with a built-in admin interface for easy data management.
+A lightweight backend-as-a-service platform designed for hobby projects and prototypes. TinyCore provides essential backend services in a single, self-contained deployment, allowing you to focus on building your frontend without the overhead of setting up authentication, databases, and APIs.
 
-## Features
+## Vision
 
-- **Simple Key-Value Storage**
-  - REST API for storing and retrieving JSON data
-  - Key prefix searching
-  - Support for metadata on both applications and key-value pairs
-- **Multi-Application Support**
-  - Create separate applications to isolate different data sets
-  - Each application gets its own key-value namespace
-- **Built-in Admin Interface**
-  - Web-based UI for managing applications
-  - Browse and search stored data
-  - Add/remove key-value pairs through the interface
-- **Lightweight & Self-Contained**
-  - Uses SQLite for zero-configuration storage
-  - Single binary deployment
-  - Minimal resource requirements
+Stop reinventing the wheel for every toy project. TinyCore gives you:
+- **Authentication** out of the box
+- **Key-value storage** for any data structure  
+- **Multi-application support** to run multiple projects from one backend
+- **Admin interface** for data management
+- **TypeScript client** with React hooks for instant frontend integration
+
+Perfect for hackathons, MVPs, personal projects, and learning experiments.
+
+## Architecture
+
+TinyCore is built as a monorepo with these packages:
+
+### 📦 Packages
+
+| Package | Description | Purpose |
+|---------|-------------|---------|
+| **[@tinycore/server](./packages/server)** | Express.js backend with SQLite | REST APIs, authentication, data storage |
+| **[@tinycore/client](./packages/client)** | TypeScript client with React hooks | Frontend integration, API calls, state management |
+| **[@tinycore/admin-ui](./packages/admin-ui)** | React admin interface | Data management, user-friendly CRUD operations |
+| **[@tinycore/shared](./packages/shared)** | Common types and utilities | Shared code across packages |
 
 ## Quick Start
 
-1. Clone the repository:
+### Development
 
+1. **Clone and install:**
    ```bash
-   git clone https://github.com/jbatch/tinycore-kv
-   cd tinycore-kv
+   git clone https://github.com/jbatch/tinycore
+   cd tinycore
+   pnpm install
    ```
 
-2. Install dependencies:
-
+2. **Start the server:**
    ```bash
-   yarn
+   pnpm run dev:server
    ```
 
-3. Build the admin UI and server:
+3. **Start the admin UI (optional):**
    ```bash
-   yarn dev
+   # In another terminal
+   pnpm run dev:admin-ui
    ```
 
-## Docker Deployment
+The server runs on `http://localhost:3000` and admin UI on `http://localhost:5173`.
 
-Build the Docker image:
-
-```bash
-docker build -t tinycore-kv .
-```
-
-Run with persistent storage:
+### Production Deployment
 
 ```bash
-docker run -p 3000:3000 --mount type=volume,src=kv-data,dst=/app/data -d tinycore-kv
+# Build and run with Docker
+pnpm run docker:build
+pnpm run docker:run
 ```
 
-Environment variables:
+Note: running docker container locally points to https://kv.jbat.ch (still need to fix this for local docker)
 
-- `PORT`: Server port (default: 3000)
-- `DB_PATH`: SQLite database path (default: ./data/tinycore.db)
-- `NODE_ENV`: Environment mode (development/production)
+Access your deployment at `http://localhost:3000` with the admin UI built-in.
 
-## API Usage
 
-### Applications
+## Environment Configuration
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | `3000` | Server port |
+| `DB_PATH` | `./data/tinycore.db` | SQLite database path |
+| `NODE_ENV` | `development` | Environment mode |
+| `JWT_SECRET` | `your-secret-key-change-in-production` | JWT signing secret |
+| `CORS_ORIGIN` | `*` | CORS allowed origins |
+
+## Development
 
 ```bash
-# Create an application
-curl -X POST http://localhost:3000/api/v1/apps \
-  -H "Content-Type: application/json" \
-  -d '{"id": "my-app", "name": "My App", "metadata": {"env": "dev"}}'
+# Install dependencies
+pnpm install
 
-# List applications
-curl http://localhost:3000/api/v1/apps
+# Run all packages in development
+pnpm run dev:all
 
-# Delete an application
-curl -X DELETE http://localhost:3000/api/v1/apps/my-app
+# Build all packages
+pnpm run build
+
+# Run database migrations
+pnpm run migrate status
+pnpm run migrate up
+
+# Clean build artifacts
+pnpm run clean
 ```
-
-### Key-Value Operations
-
-```bash
-# Set a value
-curl -X PUT http://localhost:3000/api/v1/kv/my-app/my-key \
-  -H "Content-Type: application/json" \
-  -d '{"value": {"hello": "world"}, "metadata": {"type": "greeting"}}'
-
-# Get a value
-curl http://localhost:3000/api/v1/kv/my-app/my-key
-
-# List all keys (with optional prefix)
-curl http://localhost:3000/api/v1/kv/my-app?prefix=my-
-
-# Delete a value
-curl -X DELETE http://localhost:3000/api/v1/kv/my-app/my-key
-```
-
-## TODO
-
-- [ ] Add authentication for admin interface
-- [ ] Add rate limiting and storage quotas
-- [ ] Support for data export/import
-- [ ] Advanced querying capabilities
